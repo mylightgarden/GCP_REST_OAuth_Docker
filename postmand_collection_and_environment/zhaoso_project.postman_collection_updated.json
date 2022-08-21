@@ -1,0 +1,1431 @@
+{
+	"info": {
+		"_postman_id": "e3c44a7d-bbaf-45d4-94a9-8045b0f00a37",
+		"name": "zhaoso_project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6052849"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n \"username\": \"orange@orange.com\", \r\n \"password\": \"Orange1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/login",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login user2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n \"username\": \"apple@apple.com\", \r\n \"password\": \"Apple1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/login",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add boat 201",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set boat id environment variable from response",
+							"pm.environment.set(\"boat_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Sea Witch\");",
+							"   pm.expect(pm.response.json()[\"type\"]).to.eq(\"Catamaran\");",
+							"   pm.expect(pm.response.json()[\"length\"]).to.eq(28);",
+							"   pm.expect(pm.response.json()[\"loads\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/boats/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTA1VDA0OjE0OjA5Ljc5N1oiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQ0MDI0NDksImV4cCI6MTY1NDQzODQ0OX0.xOEkkZTzMLrFk5kImRgfKarhryHLb0GU8JcpVQ6Pjs_jmd4kUrR_bCENrKgCvWDHCmohqgSJAR51gsLmv81jILCnVK-S3Rf9UCibszsMVj5d_vDppJFBRkoBCc0rbmmOmgcM9C4Z6o-GZaqRZhGZ13Yc73igNSS6c7th3BZ7t2CFodX3ZmQKGGmwWMxOcXNzp4AIfDj1vnctlGp8DiXxV_7sn4Kb5FQrOpm060nuyYuzEC3q0HfiDNZMO2fEMN7PgcQimhT4wtQkUKuHbc2U3jo8C26cpX3i8buzKEl0sw8gFY6g4xkTM7VBL5svS0fkvt2dEIyhlr7yq8fI_BD3Jw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sea Witch\",\n    \"type\": \"Catamaran\",\n    \"length\": 28\n}\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/boats",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update a boat with auth 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set boat id environment variable from response",
+							"pm.environment.set(\"boat_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Sea Witch\");",
+							"   pm.expect(pm.response.json()[\"type\"]).to.eq(\"Catamaran\");",
+							"   pm.expect(pm.response.json()[\"length\"]).to.eq(2999);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTA1VDA0OjE0OjA5Ljc5N1oiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQ0MDI0NDksImV4cCI6MTY1NDQzODQ0OX0.xOEkkZTzMLrFk5kImRgfKarhryHLb0GU8JcpVQ6Pjs_jmd4kUrR_bCENrKgCvWDHCmohqgSJAR51gsLmv81jILCnVK-S3Rf9UCibszsMVj5d_vDppJFBRkoBCc0rbmmOmgcM9C4Z6o-GZaqRZhGZ13Yc73igNSS6c7th3BZ7t2CFodX3ZmQKGGmwWMxOcXNzp4AIfDj1vnctlGp8DiXxV_7sn4Kb5FQrOpm060nuyYuzEC3q0HfiDNZMO2fEMN7PgcQimhT4wtQkUKuHbc2U3jo8C26cpX3i8buzKEl0sw8gFY6g4xkTM7VBL5svS0fkvt2dEIyhlr7yq8fI_BD3Jw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sea Witch\",\n    \"type\": \"Catamaran\",\n    \"length\": 2999\n}\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add boat with missing attributes 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for 400 status code",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The request object is missing at least one of the required attributes\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTAzVDAzOjA1OjAxLjE1OFoiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQyMjU1MDEsImV4cCI6MTY1NDI2MTUwMX0.Ndf2GnWyDNsFURoLD-SRNTBL8uaVv-xAkO_7DixV959BkP0BJiSGPvk91PHQ2bmleergES9PPL81ZigO1fJJWEvWIZCqQ5P3XfTGk7sOEcnM9RM86UNxSZ3Qj80xnhEmLMnFXIAeb6NqBFqys5VOf63iKGEYx2iyO2Jev4kFORlY25_a3QooHPb3eXrpv0lwjp0reqCI-IgulzbqE7fwAmBF-F5pqILw4i2jkM3PgFz4Fd2ogucm18Ag0F2gWIUcK4D7ITcssRdX1QibsJWxdhDueMidXq3QjM8cvQ40hMYLkbfSQahHSL9-bROuB0VaI7vyq5TlqO-zcHqjwg88nQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sea Witch\",\n    \"type\": \"Catamaran\"\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/boats",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats of curent user with pagination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"only correct number of loads in response\", function () {",
+							"    //Check for correct number of loads",
+							"        pm.expect(pm.response.json()[\"boats\"].length).to.equal(5);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTA1VDAzOjUwOjMwLjgyOFoiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQ0MDEwMzAsImV4cCI6MTY1NDQzNzAzMH0.usf9unKUpSULgd9jfOrrcAkaNXNngxK7oc6wFgyTpNHNNBQ1YEOL1SC6MntRIXJ5S8fEbeOEQNKZezH3g-aEW_yDDuTfLPmJLA61yqyazvbC7qARZz31PvYOQCI2cFObj0vNg1TghSHl-XLOv8_gkS4CiZ9uI7YR-ZOn-vBxibi9epZdNVWozdXfWpKqJ59X5Ce1HuodS11F4BKu_lMMVTStwt6jEuidHLVcr6xM54V9qya1br9nqP_wzLyYRTjWTyVYF-OmtQocBQpqJqTgJaLI5BGukdrsc7LHrEO-KRXREUFGkjcmcbwvGstsSxY8zBazygiqopfYOGZtBEYFFg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats no auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"401 status code no returned result\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(401);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get a boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200\", function () {",
+							"    //Check for success 200 response code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTA1VDA0OjE0OjA5Ljc5N1oiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQ0MDI0NDksImV4cCI6MTY1NDQzODQ0OX0.xOEkkZTzMLrFk5kImRgfKarhryHLb0GU8JcpVQ6Pjs_jmd4kUrR_bCENrKgCvWDHCmohqgSJAR51gsLmv81jILCnVK-S3Rf9UCibszsMVj5d_vDppJFBRkoBCc0rbmmOmgcM9C4Z6o-GZaqRZhGZ13Yc73igNSS6c7th3BZ7t2CFodX3ZmQKGGmwWMxOcXNzp4AIfDj1vnctlGp8DiXxV_7sn4Kb5FQrOpm060nuyYuzEC3q0HfiDNZMO2fEMN7PgcQimhT4wtQkUKuHbc2U3jo8C26cpX3i8buzKEl0sw8gFY6g4xkTM7VBL5svS0fkvt2dEIyhlr7yq8fI_BD3Jw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get a boat unsupport type 406",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"406 Not Accepted\", function () {",
+							"    pm.response.to.have.status(406);",
+							"});",
+							"",
+							"",
+							"pm.test(\"406 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Can only provide application/json\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat no auth 401",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"401 no content\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat with auth 204",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTAzVDAzOjQyOjA0LjU4NFoiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQyMjc3MjQsImV4cCI6MTY1NDI2MzcyNH0.QKlaaYmXqXNxT7j9ktGlevpVytCJPlI9jRfsoEwgUvnRU_eHrS0CFy3lhKkYCKy-Wu1lCy2hDfj8w6K61gT5CgxGMn-EMO9_oyWR_tmfBMZVbkDcNKr1wGN7DFIpHj7d4vz9m_h6eqcplXhCQ6LA2jOQVRObKN9kUcFlU9BiNCipR-nEI2_0SX3hLmZUaUXyOxQXaijjZfmP_q4bbp8sic9OF52XJxljBfVUK9WSN6cvVnaDJ8HpFP2Q1aSG5Vv13wE8yPu_vJaio7A6GUx2j2EsY7JpeyEDoNn8lUhBs_BE0ncLcSv1iN3ax-jFmvex1qbzkN9tbpFoA8YdFcgNvQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat not exist 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"403 not exist\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTAzVDAzOjQyOjA0LjU4NFoiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQyMjc3MjQsImV4cCI6MTY1NDI2MzcyNH0.QKlaaYmXqXNxT7j9ktGlevpVytCJPlI9jRfsoEwgUvnRU_eHrS0CFy3lhKkYCKy-Wu1lCy2hDfj8w6K61gT5CgxGMn-EMO9_oyWR_tmfBMZVbkDcNKr1wGN7DFIpHj7d4vz9m_h6eqcplXhCQ6LA2jOQVRObKN9kUcFlU9BiNCipR-nEI2_0SX3hLmZUaUXyOxQXaijjZfmP_q4bbp8sic9OF52XJxljBfVUK9WSN6cvVnaDJ8HpFP2Q1aSG5Vv13wE8yPu_vJaio7A6GUx2j2EsY7JpeyEDoNn8lUhBs_BE0ncLcSv1iN3ax-jFmvex1qbzkN9tbpFoA8YdFcgNvQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete all boat 405",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"405 no content\", function () {",
+							"    pm.response.to.have.status(405);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTAzVDAzOjQyOjA0LjU4NFoiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQyMjc3MjQsImV4cCI6MTY1NDI2MzcyNH0.QKlaaYmXqXNxT7j9ktGlevpVytCJPlI9jRfsoEwgUvnRU_eHrS0CFy3lhKkYCKy-Wu1lCy2hDfj8w6K61gT5CgxGMn-EMO9_oyWR_tmfBMZVbkDcNKr1wGN7DFIpHj7d4vz9m_h6eqcplXhCQ6LA2jOQVRObKN9kUcFlU9BiNCipR-nEI2_0SX3hLmZUaUXyOxQXaijjZfmP_q4bbp8sic9OF52XJxljBfVUK9WSN6cvVnaDJ8HpFP2Q1aSG5Vv13wE8yPu_vJaio7A6GUx2j2EsY7JpeyEDoNn8lUhBs_BE0ncLcSv1iN3ax-jFmvex1qbzkN9tbpFoA8YdFcgNvQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add boat again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set boat id environment variable from response",
+							"pm.environment.set(\"boat_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Sea Witch\");",
+							"   pm.expect(pm.response.json()[\"type\"]).to.eq(\"Catamaran\");",
+							"   pm.expect(pm.response.json()[\"length\"]).to.eq(28);",
+							"   pm.expect(pm.response.json()[\"loads\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/boats/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTAzVDAzOjA1OjAxLjE1OFoiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQyMjU1MDEsImV4cCI6MTY1NDI2MTUwMX0.Ndf2GnWyDNsFURoLD-SRNTBL8uaVv-xAkO_7DixV959BkP0BJiSGPvk91PHQ2bmleergES9PPL81ZigO1fJJWEvWIZCqQ5P3XfTGk7sOEcnM9RM86UNxSZ3Qj80xnhEmLMnFXIAeb6NqBFqys5VOf63iKGEYx2iyO2Jev4kFORlY25_a3QooHPb3eXrpv0lwjp0reqCI-IgulzbqE7fwAmBF-F5pqILw4i2jkM3PgFz4Fd2ogucm18Ag0F2gWIUcK4D7ITcssRdX1QibsJWxdhDueMidXq3QjM8cvQ40hMYLkbfSQahHSL9-bROuB0VaI7vyq5TlqO-zcHqjwg88nQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sea Witch\",\n    \"type\": \"Catamaran\",\n    \"length\": 28\n}\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/boats",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set appropriate environment variable for load id",
+							"pm.environment.set(\"load_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"   //Check if status code is 201",
+							"   pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    //Check for appropriate content including self value",
+							"    pm.expect(pm.response.json()[\"volume\"]).to.eq(5);",
+							"    pm.expect(pm.response.json()[\"item\"]).to.eq(\"LEGO Blocks\");",
+							"    pm.expect(pm.response.json()[\"creation_date\"]).to.eq(\"10/18/2021\");",
+							"    pm.expect(pm.response.json()[\"carrier\"]).to.equal(null);",
+							"    const self_url = pm.environment.get(\"app_url\") + \"/loads/\" + pm.response.json()[\"id\"];",
+							"    pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"volume\": 5,\n  \"item\": \"LEGO Blocks\",\n  \"creation_date\": \"10/18/2021\"\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/loads",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update a load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"201 status code\", function () {",
+							"   //Check if status code is 201",
+							"   pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    //Check for appropriate content including self value",
+							"    pm.expect(pm.response.json()[\"volume\"]).to.eq(5999);",
+							"    pm.expect(pm.response.json()[\"item\"]).to.eq(\"LEGO Blocks\");",
+							"    pm.expect(pm.response.json()[\"creation_date\"]).to.eq(\"10/18/2021\");",
+							"    pm.expect(pm.response.json()[\"carrier\"]).to.equal(null);",
+							"    const self_url = pm.environment.get(\"app_url\") + \"/loads/\" + pm.response.json()[\"id\"];",
+							"    pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"volume\": 5999,\n  \"item\": \"LEGO Blocks\",\n  \"creation_date\": \"10/18/2021\"\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/loads/{{load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loads",
+						"{{load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add load with missing attributes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for error code 400",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.equal(\"The request object is missing at least one of the required attributes\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"volume\": 5,\n  \"item\": \"LEGO Blocks\"\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/loads",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get load (new load, no carrier) 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check if status code is 200",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    //Check if the content is valid and has proper self url",
+							"    pm.expect(pm.response.json()[\"volume\"]).to.eq(5999);",
+							"    pm.expect(pm.response.json()[\"item\"]).to.eq(\"LEGO Blocks\");",
+							"    pm.expect(pm.response.json()[\"creation_date\"]).to.eq(\"10/18/2021\");",
+							"    pm.expect(pm.response.json()[\"carrier\"]).to.equal(null);",
+							"    const self_url = pm.environment.get(\"app_url\") + \"/loads/\" + pm.response.json()[\"id\"];",
+							"    pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/loads/{{load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loads",
+						"{{load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get load with invalid id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 not found\", function () {",
+							"    //Check for 404 status code",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for appropriate error message",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.equal(\"No load with this load_id exists\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/loads/{{invalid_load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loads",
+						"{{invalid_load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "assign load to boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 status code\", function () {",
+							"    //Check for status code 204",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}/loads/{{load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}",
+						"loads",
+						"{{load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "assign load with invalid boat id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"   //Check for error code 404",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for error code 404",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.equal(\"The specified boat and/or load does not exist\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{invalid_boat_id}}/loads/{{load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{invalid_boat_id}}",
+						"loads",
+						"{{load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "assign load with invalid load id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"   //Check for error code 404",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for error code 404",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.equal(\"The specified boat and/or load does not exist\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}/loads/{{invalid_load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}",
+						"loads",
+						"{{invalid_load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "assign load with invalid boat id & invalid load id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"   //Check for error code 404",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for error code 404",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.equal(\"The specified boat and/or load does not exist\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{invalid_boat_id}}/loads/{{invalid_load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{invalid_boat_id}}",
+						"loads",
+						"{{invalid_load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove load with invalid boat id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    //Check for appropriate 404 status code",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No boat with this boat_id is loaded with the load with this load_id\");",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{invalid_boat_id}}/loads/{{load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{invalid_boat_id}}",
+						"loads",
+						"{{load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove load with invalid load id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    //Check for appropriate 404 status code",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No boat with this boat_id is loaded with the load with this load_id\");",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{boat_id}}/loads/{{invalid_load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat_id}}",
+						"loads",
+						"{{invalid_load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove load with invalid boat id & invalid load id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    //Check for appropriate 404 status code",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No boat with this boat_id is loaded with the load with this load_id\");",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{invalid_boat_id}}/loads/{{invalid_load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{invalid_boat_id}}",
+						"loads",
+						"{{invalid_load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat with invalid id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"403 not found\", function () {",
+							"    //Check for appropriate 404 status code",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for appropriate error message",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.equal(\"No boat with this boat_id exists\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTAzVDAzOjQyOjA0LjU4NFoiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQyMjc3MjQsImV4cCI6MTY1NDI2MzcyNH0.QKlaaYmXqXNxT7j9ktGlevpVytCJPlI9jRfsoEwgUvnRU_eHrS0CFy3lhKkYCKy-Wu1lCy2hDfj8w6K61gT5CgxGMn-EMO9_oyWR_tmfBMZVbkDcNKr1wGN7DFIpHj7d4vz9m_h6eqcplXhCQ6LA2jOQVRObKN9kUcFlU9BiNCipR-nEI2_0SX3hLmZUaUXyOxQXaijjZfmP_q4bbp8sic9OF52XJxljBfVUK9WSN6cvVnaDJ8HpFP2Q1aSG5Vv13wE8yPu_vJaio7A6GUx2j2EsY7JpeyEDoNn8lUhBs_BE0ncLcSv1iN3ax-jFmvex1qbzkN9tbpFoA8YdFcgNvQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/boats/{{invalid_boat_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"boats",
+						"{{invalid_boat_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"   //Check for appropriate 204 status code",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/loads/{{load_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loads",
+						"{{load_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all loads with pagination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"   //Check for appropriate 200 status code",
+							"   pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"only correct number of loads in response\", function () {",
+							"    //Check for correct number of loads",
+							"        pm.expect(pm.response.json()[\"items\"].length).to.equal(5);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/loads",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set boat id environment variable from response",
+							"pm.environment.set(\"boat_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"fname\"]).to.eq(\"Summy\");",
+							"   pm.expect(pm.response.json()[\"lname\"]).to.eq(\"Catty\");",
+							"",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InIzeW5nMDNBN3hNdk95eWNqa1FWSyJ9.eyJuaWNrbmFtZSI6Im9yYW5nZSIsIm5hbWUiOiJvcmFuZ2VAb3JhbmdlLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lZDcwZDhlM2QwNmY2MjgyNjJmNzU5MmE4YWMyODhjMT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm9yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIyLTA2LTAzVDAzOjA1OjAxLjE1OFoiLCJlbWFpbCI6Im9yYW5nZUBvcmFuZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3Byb2plY3Q3LXpoYW9zby51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjI3ZDkwNDg5ZDA0MmMwMDY5MzhjYWI0IiwiYXVkIjoiQzJhV09BUDYwU1VLYXAwUHpwTEFvUmgzTVZVYUhHQWkiLCJpYXQiOjE2NTQyMjU1MDEsImV4cCI6MTY1NDI2MTUwMX0.Ndf2GnWyDNsFURoLD-SRNTBL8uaVv-xAkO_7DixV959BkP0BJiSGPvk91PHQ2bmleergES9PPL81ZigO1fJJWEvWIZCqQ5P3XfTGk7sOEcnM9RM86UNxSZ3Qj80xnhEmLMnFXIAeb6NqBFqys5VOf63iKGEYx2iyO2Jev4kFORlY25_a3QooHPb3eXrpv0lwjp0reqCI-IgulzbqE7fwAmBF-F5pqILw4i2jkM3PgFz4Fd2ogucm18Ag0F2gWIUcK4D7ITcssRdX1QibsJWxdhDueMidXq3QjM8cvQ40hMYLkbfSQahHSL9-bROuB0VaI7vyq5TlqO-zcHqjwg88nQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fname\": \"Summy\",\n    \"lname\": \"Catty\"\n}\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/users",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"   //Check for appropriate 200 status code",
+							"   pm.response.to.have.status(200)",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/users",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth0 get token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"grant_type\": \"password\",\r\n    \"username\": \"orange@orange.com\", \r\n    \"password\": \"Orange1234\",\r\n    \"client_id\": \"C2aWOAP60SUKap0PzpLAoRh3MVUaHGAi\",\r\n    \"client_secret\": \"bFupHx4_cqAYoj3SVsI7NURfULh6XqU0FY_GWqJVRX0ZCvAPyzOvy9iw2TtW0r_E\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://project7-zhaoso.us.auth0.com/oauth/token",
+					"protocol": "https",
+					"host": [
+						"project7-zhaoso",
+						"us",
+						"auth0",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
