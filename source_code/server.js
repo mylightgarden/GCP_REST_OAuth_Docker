@@ -1,3 +1,5 @@
+/* Author: Sophie Zhao */
+
 const express = require('express');
 const app = express();
 
@@ -259,8 +261,6 @@ function remove_load(boat_id, load_id) {
 
 /*---------------Assign a load to a boat-------------*/
 
-
-/*---------------Add load to boat-------------*/
 function add_load(boat_id, load_id) {
     console.log("boat_id: ", boat_id)
     console.log("load_id: ", load_id)
@@ -328,10 +328,6 @@ function get_loads_of_boat(req, boat_id){
     });
 })
 }
-
-
-
-/* ------------- End Model Functions ------------- */
 
 /* ------------- Begin Controller Functions ------------- */
 
